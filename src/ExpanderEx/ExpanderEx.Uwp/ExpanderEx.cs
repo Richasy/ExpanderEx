@@ -7,6 +7,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 
 namespace ExpanderEx.Uwp
 {
@@ -56,23 +57,13 @@ namespace ExpanderEx.Uwp
             {
                 _expander.Expanding += (s, e) => Expanding?.Invoke(s, e);
                 _expander.Collapsed += (s, e) => Collapsed?.Invoke(s, e);
-                if (_expander.FindDescendantByName("ExpanderHeader") is ToggleButton expanderHeader)
-                {
-                    expanderHeader.Click += (s, e) => Click?.Invoke(this, e);
-                }
-                else
-                {
-                    _expander.Tapped += (s, e) =>
-                    {
-                        e.Handled = true;
-                        Click?.Invoke(this, new RoutedEventArgs());
-                    };
-                }
+                _expander.Loaded += OnInternalExpanderLoaded;
             }
 
             if (_quadratePanel != null && _quadratePanel is Button headerButton)
             {
-                headerButton.Click += (s, e) => Click?.Invoke(this, e);
+                headerButton.Click -= OnHeaderClick;
+                headerButton.Click += OnHeaderClick;
             }
 
             CheckPartVisibility();
@@ -83,6 +74,34 @@ namespace ExpanderEx.Uwp
         {
             var instance = d as ExpanderEx;
             instance.CheckPartVisibility();
+        }
+
+        private void OnInternalExpanderLoaded(object sender, RoutedEventArgs e)
+        {
+            if (_expander != null)
+            {
+                if (_expander.FindDescendantByName("ExpanderHeader") is ToggleButton expanderHeader)
+                {
+                    expanderHeader.Click -= OnHeaderClick;
+                    expanderHeader.Click += OnHeaderClick;
+                }
+                else
+                {
+                    _expander.Tapped -= OnHeaderTapped;
+                    _expander.Tapped += OnHeaderTapped;
+                }
+            }
+        }
+
+        private void OnHeaderTapped(object sender, TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            Click?.Invoke(this, new RoutedEventArgs());
+        }
+
+        private void OnHeaderClick(object sender, RoutedEventArgs e)
+        {
+            Click?.Invoke(this, e);
         }
 
         private void CheckPartVisibility()
