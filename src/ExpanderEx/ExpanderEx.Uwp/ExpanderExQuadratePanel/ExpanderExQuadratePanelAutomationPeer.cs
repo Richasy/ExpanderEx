@@ -5,7 +5,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml.Automation.Peers;
 
-namespace ExpanderEx.Uwp
+namespace Richasy.ExpanderEx.Uwp
 {
     /// <summary>
     /// Exposes <see cref="ExpanderExQuadratePanel"/> to Microsoft UI Automation.

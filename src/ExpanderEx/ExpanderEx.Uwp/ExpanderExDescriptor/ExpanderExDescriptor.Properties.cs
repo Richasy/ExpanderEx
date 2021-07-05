@@ -4,7 +4,7 @@
 
 using Windows.UI.Xaml;
 
-namespace ExpanderEx.Uwp
+namespace Richasy.ExpanderEx.Uwp
 {
     /// <summary>
     /// A layout style that displays icon, title, and description text on the head of <see cref="ExpanderEx"/>.

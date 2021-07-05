@@ -5,7 +5,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace ExpanderEx.Uwp
+namespace Richasy.ExpanderEx.Uwp
 {
     /// <summary>
     /// The container that display the dynamic wrap items.

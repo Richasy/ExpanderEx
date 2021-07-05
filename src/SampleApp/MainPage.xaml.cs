@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using ExpanderEx.Uwp;
+using Richasy.ExpanderEx.Uwp;
 using Windows.UI.Xaml.Controls;
 
 namespace SampleApp
@@ -24,7 +24,7 @@ namespace SampleApp
         private async void OnExpanderExClickAsync(object sender, ExpanderExClickEventArgs e)
         {
             var dialog = new ContentDialog();
-            dialog.Content = $"You clicked: {(sender as ExpanderEx.Uwp.ExpanderEx).Name}";
+            dialog.Content = $"You clicked: {(sender as Richasy.ExpanderEx.Uwp.ExpanderEx).Name}";
             dialog.CloseButtonText = "Cancel";
             dialog.Title = "Hi!";
             await dialog.ShowAsync();

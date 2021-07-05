@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace ExpanderEx.Uwp
+namespace Richasy.ExpanderEx.Uwp
 {
     /// <summary>
     /// Represents a line that separates items in <see cref="ExpanderEx.Content"/>.

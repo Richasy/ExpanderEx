@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
-namespace ExpanderEx.Uwp
+namespace Richasy.ExpanderEx.Uwp
 {
     /// <summary>
     /// To encapsulate the Expander in Microsoft.UI.Xaml, customize the icon, content and expand content.

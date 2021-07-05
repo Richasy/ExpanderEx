@@ -5,7 +5,7 @@
 using System;
 using Windows.UI.Xaml;
 
-namespace ExpanderEx.Uwp
+namespace Richasy.ExpanderEx.Uwp
 {
     /// <summary>
     /// Click event arguments of ExpanderEx.

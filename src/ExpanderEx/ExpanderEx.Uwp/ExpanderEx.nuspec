@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Richasy.ExpanderEx.UWP</id>
+    <version>1.0.1</version>
+    <authors>Richasy</authors>
+    <owners>Richasy</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Richasy/ExpanderEx</projectUrl>
+    <iconUrl>https://z3.ax1x.com/2021/07/05/R4BwEq.png</iconUrl>
+    <description>Encapsulation based on the Expander of WinUI 2.6</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2021</copyright>
+    <tags>Richasy uwp expander winui</tags>
+    <dependencies>
+      <group targetFramework="uap10.0.17763">
+        <dependency id="Microsoft.UI.Xaml" version="2.6.0" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.10" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Richasy.ExpanderEx.Uwp.dll" target="lib\uap10.0.17763"/>
+    <file src="bin\Release\Richasy.ExpanderEx.Uwp.pri" target="lib\uap10.0.17763"/>
+    <file src="bin\Release\Richasy.ExpanderEx.Uwp\**\*" target="lib\uap10.0.17763\Richasy.ExpanderEx.Uwp"/>
+  </files>
+</package>

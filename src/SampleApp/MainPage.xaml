@@ -6,7 +6,7 @@
     xmlns:local="using:SampleApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:uwp="using:ExpanderEx.Uwp"
+    xmlns:uwp="using:Richasy.ExpanderEx.Uwp"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
