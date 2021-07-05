@@ -9,16 +9,17 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ExpanderEx.cs" />
-    <Compile Include="ExpanderEx.Properties.cs" />
-    <Compile Include="ExpanderExDescriptor.cs" />
-    <Compile Include="ExpanderExDescriptor.Properties.cs" />
+    <Compile Include="ExpanderExClickEventArgs.cs" />
+    <Compile Include="ExpanderEx\ExpanderEx.cs" />
+    <Compile Include="ExpanderEx\ExpanderEx.Properties.cs" />
+    <Compile Include="ExpanderExDescriptor\ExpanderExDescriptor.cs" />
+    <Compile Include="ExpanderExDescriptor\ExpanderExDescriptor.Properties.cs" />
     <Compile Include="ExpanderExItemSeparator.cs" />
     <Compile Include="ExpanderExMenuPanel.cs" />
-    <Compile Include="ExpanderExQuadratePanel.cs" />
-    <Compile Include="ExpanderExQuadratePanelAutomationPeer.cs" />
-    <Compile Include="ExpanderExWrapper.cs" />
-    <Compile Include="ExpanderExWrapper.Properties.cs" />
+    <Compile Include="ExpanderExQuadratePanel\ExpanderExQuadratePanel.cs" />
+    <Compile Include="ExpanderExQuadratePanel\ExpanderExQuadratePanelAutomationPeer.cs" />
+    <Compile Include="ExpanderExWrapper\ExpanderExWrapper.cs" />
+    <Compile Include="ExpanderExWrapper\ExpanderExWrapper.Properties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="$(SolutionDir)\src\Shared\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>

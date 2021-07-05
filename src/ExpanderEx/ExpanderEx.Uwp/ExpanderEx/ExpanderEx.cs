@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -14,7 +15,7 @@ namespace ExpanderEx.Uwp
     /// <summary>
     /// To encapsulate the Expander in Microsoft.UI.Xaml, customize the icon, content and expand content.
     /// </summary>
-    [TemplatePart(Name = InternalExpanderName, Type = typeof(Microsoft.UI.Xaml.Controls.Expander))]
+    [TemplatePart(Name = InternalExpanderName, Type = typeof(Expander))]
     [TemplatePart(Name = InternalQuadrateName, Type = typeof(ExpanderExQuadratePanel))]
     public partial class ExpanderEx : Control
     {
@@ -24,12 +25,18 @@ namespace ExpanderEx.Uwp
         private Expander _expander;
         private ExpanderExQuadratePanel _quadratePanel;
 
+        private bool _isTemplateApplied;
+        private bool _isLoaded;
+        private bool _isEventAttached;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpanderEx"/> class.
         /// </summary>
         public ExpanderEx()
         {
             this.DefaultStyleKey = typeof(ExpanderEx);
+            this.Loading += OnLoading;
+            this.Unloaded += OnUnloaded;
         }
 
         /// <summary>
@@ -45,29 +52,14 @@ namespace ExpanderEx.Uwp
         /// <summary>
         /// Occurs when the header of ExpanderEx is clicked.
         /// </summary>
-        public event RoutedEventHandler Click;
+        public event EventHandler<ExpanderExClickEventArgs> Click;
 
         /// <inheritdoc/>
         protected override void OnApplyTemplate()
         {
-            _expander = GetTemplateChild(InternalExpanderName) as Expander;
-            _quadratePanel = GetTemplateChild(InternalQuadrateName) as ExpanderExQuadratePanel;
-
-            if (_expander != null)
-            {
-                _expander.Expanding += (s, e) => Expanding?.Invoke(s, e);
-                _expander.Collapsed += (s, e) => Collapsed?.Invoke(s, e);
-                _expander.Loaded += OnInternalExpanderLoaded;
-            }
-
-            if (_quadratePanel != null && _quadratePanel is Button headerButton)
-            {
-                headerButton.Click -= OnHeaderClick;
-                headerButton.Click += OnHeaderClick;
-            }
-
-            CheckPartVisibility();
             base.OnApplyTemplate();
+            _isTemplateApplied = true;
+            InitializeExpanderEx();
         }
 
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -75,6 +67,67 @@ namespace ExpanderEx.Uwp
             var instance = d as ExpanderEx;
             instance.CheckPartVisibility();
         }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            _isLoaded = false;
+            DestoryExpanderEx();
+        }
+
+        private void OnLoading(FrameworkElement sender, object args)
+        {
+            _isLoaded = true;
+            InitializeExpanderEx();
+        }
+
+        private void InitializeExpanderEx()
+        {
+            if (_isEventAttached || !_isLoaded || !_isTemplateApplied)
+            {
+                return;
+            }
+
+            _expander = GetTemplateChild(InternalExpanderName) as Expander;
+            _quadratePanel = GetTemplateChild(InternalQuadrateName) as ExpanderExQuadratePanel;
+
+            if (_expander != null)
+            {
+                _expander.Expanding += OnExpanderExpanding;
+                _expander.Collapsed += OnExpanderCollapsed;
+                _expander.Tapped += OnHeaderTapped;
+            }
+
+            if (_quadratePanel != null && _quadratePanel is Button headerButton)
+            {
+                headerButton.Click += OnHeaderClick;
+            }
+
+            CheckPartVisibility();
+            _isEventAttached = true;
+        }
+
+        private void DestoryExpanderEx()
+        {
+            if (_expander != null)
+            {
+                _expander.Expanding -= OnExpanderExpanding;
+                _expander.Collapsed -= OnExpanderCollapsed;
+                _expander.Tapped -= OnHeaderTapped;
+            }
+
+            if (_quadratePanel != null && _quadratePanel is Button headerButton)
+            {
+                headerButton.Click -= OnHeaderClick;
+            }
+
+            _isEventAttached = false;
+        }
+
+        private void OnExpanderCollapsed(Expander sender, ExpanderCollapsedEventArgs args)
+            => Collapsed?.Invoke(sender, args);
+
+        private void OnExpanderExpanding(Expander sender, ExpanderExpandingEventArgs args)
+            => Expanding?.Invoke(sender, args);
 
         private void OnInternalExpanderLoaded(object sender, RoutedEventArgs e)
         {
@@ -88,7 +141,6 @@ namespace ExpanderEx.Uwp
                 else
                 {
                     _expander.Tapped -= OnHeaderTapped;
-                    _expander.Tapped += OnHeaderTapped;
                 }
             }
         }
@@ -96,12 +148,12 @@ namespace ExpanderEx.Uwp
         private void OnHeaderTapped(object sender, TappedRoutedEventArgs e)
         {
             e.Handled = true;
-            Click?.Invoke(this, new RoutedEventArgs());
+            Click?.Invoke(this, new ExpanderExClickEventArgs(true, _expander));
         }
 
         private void OnHeaderClick(object sender, RoutedEventArgs e)
         {
-            Click?.Invoke(this, e);
+            Click?.Invoke(this, new ExpanderExClickEventArgs(false, _quadratePanel));
         }
 
         private void CheckPartVisibility()
