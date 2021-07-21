@@ -60,6 +60,18 @@ namespace Richasy.ExpanderEx.Uwp
             DependencyProperty.Register(nameof(InlineSpacing), typeof(double), typeof(ExpanderExDescriptor), new PropertyMetadata(16d));
 
         /// <summary>
+        /// Dependency property of <see cref="TitleFontSize"/>.
+        /// </summary>
+        public static readonly DependencyProperty TitleFontSizeProperty =
+            DependencyProperty.Register(nameof(TitleFontSize), typeof(double), typeof(ExpanderExDescriptor), new PropertyMetadata(14d));
+
+        /// <summary>
+        /// Dependency property of <see cref="DescriptionFontSize"/>.
+        /// </summary>
+        public static readonly DependencyProperty DescriptionFontSizeProperty =
+            DependencyProperty.Register(nameof(DescriptionFontSize), typeof(double), typeof(ExpanderExDescriptor), new PropertyMetadata(12d));
+
+        /// <summary>
         /// Gets or sets icon.
         /// </summary>
         public object Icon
@@ -129,6 +141,24 @@ namespace Richasy.ExpanderEx.Uwp
         {
             get { return (double)GetValue(InlineSpacingProperty); }
             set { SetValue(InlineSpacingProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the title font size.
+        /// </summary>
+        public double TitleFontSize
+        {
+            get { return (double)GetValue(TitleFontSizeProperty); }
+            set { SetValue(TitleFontSizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the description font size.
+        /// </summary>
+        public double DescriptionFontSize
+        {
+            get { return (double)GetValue(DescriptionFontSizeProperty); }
+            set { SetValue(DescriptionFontSizeProperty, value); }
         }
     }
 }

@@ -24,6 +24,12 @@
     <Thickness x:Key="DefaultExpanderWrapperInlineWidePadding">16,0,60,0</Thickness>
     <Thickness x:Key="DefaultExpanderWrapperInlineIntermediatePadding">16,0,16,0</Thickness>
 
+    <Thickness x:Key="DefaultExpanderDescriptorDescriptionMargin">0,4,0,0</Thickness>
+    <SolidColorBrush x:Key="DefaultExpanderDescriptorTitleForeground" Color="{ThemeResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="DefaultExpanderDescriptorDescriptionForeground" Color="{ThemeResource TextFillColorSecondary}" />
+
+    <x:Double x:Key="DefaultExpanderDescriptorTitleFontSize">14.0</x:Double>
+
     <Style x:Key="DefaultInternalExpanderStyle" TargetType="muxc:Expander">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -163,8 +169,9 @@
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock
                                 x:Name="TitleBlock"
-                                Style="{StaticResource BodyTextBlockStyle}"
                                 HorizontalAlignment="Left"
+                                FontSize="{TemplateBinding TitleFontSize}"
+                                Foreground="{ThemeResource DefaultExpanderDescriptorTitleForeground}"
                                 Text="{TemplateBinding Title}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
@@ -174,9 +181,10 @@
                             </TextBlock>
                             <TextBlock
                                 x:Name="DescriptionBlock"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Margin="0,2,0,0"
+                                Margin="{StaticResource DefaultExpanderDescriptorDescriptionMargin}"
                                 HorizontalAlignment="Left"
+                                FontSize="{TemplateBinding DescriptionFontSize}"
+                                Foreground="{StaticResource DefaultExpanderDescriptorDescriptionForeground}"
                                 Text="{TemplateBinding Description}"
                                 TextTrimming="CharacterEllipsis"
                                 Visibility="{TemplateBinding DescriptionVisibility}">
