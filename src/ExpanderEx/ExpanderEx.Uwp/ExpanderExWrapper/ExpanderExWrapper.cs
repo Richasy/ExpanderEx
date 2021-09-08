@@ -28,6 +28,7 @@ namespace Richasy.ExpanderEx.Uwp
         public ExpanderExWrapper()
         {
             this.DefaultStyleKey = typeof(ExpanderExWrapper);
+            this.Loaded += OnLoaded;
         }
 
         /// <inheritdoc/>
@@ -40,6 +41,19 @@ namespace Richasy.ExpanderEx.Uwp
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            CheckVisualState();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (_parent != null)
+            {
+                CheckVisualState();
+            }
+        }
+
+        private void CheckVisualState()
         {
             if (this._parent.ActualWidth < this.WrapThreshold)
             {

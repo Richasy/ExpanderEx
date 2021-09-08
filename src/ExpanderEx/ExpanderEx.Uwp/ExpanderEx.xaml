@@ -36,7 +36,9 @@
         <Setter Property="Padding" Value="0,4" />
     </Style>
 
-    <Style TargetType="local:ExpanderEx">
+    <Style BasedOn="{StaticResource DefaultExpanderExStyle}" TargetType="local:ExpanderEx" />
+
+    <Style x:Key="DefaultExpanderExStyle" TargetType="local:ExpanderEx">
         <Setter Property="InternalExpanderStyle" Value="{StaticResource DefaultInternalExpanderStyle}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -61,7 +63,12 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="local:ExpanderExQuadratePanel">
+    <Style BasedOn="{StaticResource DefaultExpanderExQuadratePanel}" TargetType="local:ExpanderExQuadratePanel" />
+
+    <Style
+        x:Key="DefaultExpanderExQuadratePanel"
+        BasedOn="{StaticResource DefaultButtonStyle}"
+        TargetType="local:ExpanderExQuadratePanel">
         <Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
         <Setter Property="Padding" Value="{StaticResource DefaultExpanderExQuadratePanelPadding}" />
         <Setter Property="MinHeight" Value="{StaticResource ExpanderMinHeight}" />
@@ -92,7 +99,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="local:ExpanderExWrapper">
+    <Style BasedOn="{StaticResource DefaultExpanderExWrapperStyle}" TargetType="local:ExpanderExWrapper" />
+
+    <Style x:Key="DefaultExpanderExWrapperStyle" TargetType="local:ExpanderExWrapper">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="WrapThreshold" Value="{StaticResource DefaultExpanderWrapperWrapThreshold}" />
         <Setter Property="IntermediateThreshold" Value="{StaticResource DefaultExpanderWrapperIntermediateThreshold}" />
@@ -146,7 +155,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="local:ExpanderExDescriptor">
+    <Style BasedOn="{StaticResource DefaultExpanderExDescriptorStyle}" TargetType="local:ExpanderExDescriptor" />
+
+    <Style x:Key="DefaultExpanderExDescriptorStyle" TargetType="local:ExpanderExDescriptor">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="InlineSpacing" Value="{StaticResource DefaultExpanderDescriptorInlineSpacing}" />
         <Setter Property="AutoHideIconThreshold" Value="{StaticResource DefaultExpanderDescriptorAutoHideIconThreshold}" />
@@ -199,7 +210,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="local:ExpanderExItemSeparator">
+    <Style BasedOn="{StaticResource DefaultExpanderExItemSeparatorStyle}" TargetType="local:ExpanderExItemSeparator" />
+
+    <Style x:Key="DefaultExpanderExItemSeparatorStyle" TargetType="local:ExpanderExItemSeparator">
         <Setter Property="StrokeBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="StrokeThickness" Value="{StaticResource DefaultExpanderExItemSeparatorThickness}" />
         <Setter Property="Margin" Value="{StaticResource DefaultExpanderExItemSeparatorMargin}" />
