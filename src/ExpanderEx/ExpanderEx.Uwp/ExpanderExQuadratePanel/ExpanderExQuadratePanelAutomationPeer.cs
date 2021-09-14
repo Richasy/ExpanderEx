@@ -9,7 +9,7 @@ namespace Richasy.ExpanderEx.Uwp
     /// <summary>
     /// Exposes <see cref="ExpanderExQuadratePanel"/> to Microsoft UI Automation.
     /// </summary>
-    public class ExpanderExQuadratePanelAutomationPeer : FrameworkElementAutomationPeer
+    public class ExpanderExQuadratePanelAutomationPeer : ButtonAutomationPeer
     {
         private readonly ExpanderExQuadratePanel owner;
 

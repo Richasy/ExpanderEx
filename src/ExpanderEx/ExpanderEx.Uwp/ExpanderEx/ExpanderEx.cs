@@ -6,6 +6,7 @@ using System;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
@@ -37,6 +38,7 @@ namespace Richasy.ExpanderEx.Uwp
             this.DefaultStyleKey = typeof(ExpanderEx);
             this.Loading += OnLoading;
             this.Unloaded += OnUnloaded;
+            RegisterPropertyChangedCallback(AutomationProperties.NameProperty, new DependencyPropertyChangedCallback(OnAutomationNameChanged));
         }
 
         /// <summary>
@@ -104,6 +106,7 @@ namespace Richasy.ExpanderEx.Uwp
 
             CheckPartVisibility();
             _isEventAttached = true;
+            InitializeAutomationName();
         }
 
         private void DestoryExpanderEx()
@@ -168,6 +171,25 @@ namespace Richasy.ExpanderEx.Uwp
             {
                 _expander.Visibility = hasContent || ForceUseExpander ? Visibility.Visible : Visibility.Collapsed;
             }
+        }
+
+        private void InitializeAutomationName()
+        {
+            var name = AutomationProperties.GetName(this);
+            if (_expander != null)
+            {
+                AutomationProperties.SetName(_expander, name);
+            }
+
+            if (_quadratePanel != null)
+            {
+                AutomationProperties.SetName(_quadratePanel, name);
+            }
+        }
+
+        private void OnAutomationNameChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            InitializeAutomationName();
         }
     }
 }

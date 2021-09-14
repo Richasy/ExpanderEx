@@ -29,7 +29,7 @@
             Grid.Column="1"
             VerticalAlignment="Center"
             Spacing="4">
-            <uwp:ExpanderEx x:Name="CompleteExpanderEx">
+            <uwp:ExpanderEx x:Name="CompleteExpanderEx" AutomationProperties.Name="i AM">
                 <uwp:ExpanderEx.Header>
                     <uwp:ExpanderExWrapper Style="{StaticResource WrapperInExpanderHeaderStyle}">
                         <uwp:ExpanderExWrapper.MainContent>
@@ -76,7 +76,10 @@
                 </uwp:ExpanderEx.Content>
             </uwp:ExpanderEx>
 
-            <uwp:ExpanderEx x:Name="HeaderExpanderEx" Click="OnExpanderExClickAsync">
+            <uwp:ExpanderEx
+                x:Name="HeaderExpanderEx"
+                AutomationProperties.Name="i AM"
+                Click="OnExpanderExClickAsync">
                 <uwp:ExpanderEx.Header>
                     <uwp:ExpanderExWrapper InlineIntermediatePadding="16,0,60,0" WrapMargin="16,0,0,0">
                         <uwp:ExpanderExWrapper.MainContent>

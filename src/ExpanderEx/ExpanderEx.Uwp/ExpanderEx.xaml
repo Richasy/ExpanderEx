@@ -39,11 +39,12 @@
     <Style BasedOn="{StaticResource DefaultExpanderExStyle}" TargetType="local:ExpanderEx" />
 
     <Style x:Key="DefaultExpanderExStyle" TargetType="local:ExpanderEx">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="InternalExpanderStyle" Value="{StaticResource DefaultInternalExpanderStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:ExpanderEx">
-                    <Grid HorizontalAlignment="Stretch" AutomationProperties.AccessibilityView="Raw">
+                    <Grid HorizontalAlignment="Stretch">
                         <muxc:Expander
                             x:Name="InternalExpander"
                             Style="{TemplateBinding InternalExpanderStyle}"
