@@ -27,17 +27,37 @@ namespace Richasy.ExpanderEx.Uwp
         /// </summary>
         public ExpanderExWrapper()
         {
-            this.DefaultStyleKey = typeof(ExpanderExWrapper);
-            this.Loaded += OnLoaded;
+            DefaultStyleKey = typeof(ExpanderExWrapper);
+            Loaded += OnLoaded;
+        }
+
+        internal void CheckVisualState()
+        {
+            if (_parent.ActualWidth < WrapThreshold)
+            {
+                VisualStateManager.GoToState(this, WrapStateName, false);
+                _rootGrid.RowSpacing = WrapRowSpacing;
+                _rootGrid.ColumnSpacing = 0;
+                _rootGrid.Margin = WrapMargin;
+                _rootGrid.Padding = new Thickness(0);
+            }
+            else
+            {
+                VisualStateManager.GoToState(this, NormalStateName, false);
+                _rootGrid.RowSpacing = 0;
+                _rootGrid.ColumnSpacing = InlineColumnSpacing;
+                _rootGrid.Margin = new Thickness(0);
+                _rootGrid.Padding = _parent.ActualWidth < IntermediateThreshold ? InlineIntermediatePadding : InlineWidePadding;
+            }
         }
 
         /// <inheritdoc/>
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            this._rootGrid = (Grid)this.GetTemplateChild(RootGridName);
-            this._parent = this.FindAscendant(typeof(Microsoft.UI.Xaml.Controls.Expander), typeof(ExpanderEx)) as FrameworkElement;
-            this.SizeChanged += this.OnSizeChanged;
+            _rootGrid = (Grid)GetTemplateChild(RootGridName);
+            _parent = this.FindAscendant(typeof(Microsoft.UI.Xaml.Controls.Expander), typeof(ExpanderEx)) as FrameworkElement;
+            SizeChanged += OnSizeChanged;
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -50,34 +70,6 @@ namespace Richasy.ExpanderEx.Uwp
             if (_parent != null)
             {
                 CheckVisualState();
-            }
-        }
-
-        private void CheckVisualState()
-        {
-            if (this._parent.ActualWidth < this.WrapThreshold)
-            {
-                VisualStateManager.GoToState(this, WrapStateName, false);
-                this._rootGrid.RowSpacing = this.WrapRowSpacing;
-                this._rootGrid.ColumnSpacing = 0;
-                this._rootGrid.Margin = this.WrapMargin;
-                this._rootGrid.Padding = new Thickness(0);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, NormalStateName, false);
-                this._rootGrid.RowSpacing = 0;
-                this._rootGrid.ColumnSpacing = this.InlineColumnSpacing;
-                this._rootGrid.Margin = new Thickness(0);
-
-                if (this._parent.ActualWidth < this.IntermediateThreshold)
-                {
-                    this._rootGrid.Padding = this.InlineIntermediatePadding;
-                }
-                else
-                {
-                    this._rootGrid.Padding = this.InlineWidePadding;
-                }
             }
         }
     }

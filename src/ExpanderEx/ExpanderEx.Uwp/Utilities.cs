@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -67,6 +68,38 @@ namespace Richasy.ExpanderEx.Uwp
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Find all descendant <see cref="FrameworkElement"/> controls using its type.
+        /// </summary>
+        /// <typeparam name="T">Control type.</typeparam>
+        /// <param name="element">Parent control.</param>
+        /// <returns>Control list.</returns>
+        public static IEnumerable<T> FindDescendantElements<T>(this DependencyObject element)
+            where T : DependencyObject
+        {
+            if (element == null)
+            {
+                yield break;
+            }
+
+            var childCount = VisualTreeHelper.GetChildrenCount(element);
+            for (var i = 0; i < childCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(element, i);
+                if (child.GetType() == typeof(T))
+                {
+                    yield return (T)child;
+                }
+                else
+                {
+                    foreach (var item in FindDescendantElements<T>(child))
+                    {
+                        yield return item;
+                    }
+                }
+            }
         }
     }
 }

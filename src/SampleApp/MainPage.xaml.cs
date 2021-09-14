@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.ObjectModel;
 using Richasy.ExpanderEx.Uwp;
 using Windows.UI.Xaml.Controls;
 
@@ -19,12 +20,21 @@ namespace SampleApp
         public MainPage()
         {
             this.InitializeComponent();
+            for (var i = 0; i < 4; i++)
+            {
+                GenerateCollection.Add($"Wrapper {i + 1}");
+            }
         }
+
+        /// <summary>
+        /// Data source used for testing.
+        /// </summary>
+        public ObservableCollection<string> GenerateCollection { get; } = new ObservableCollection<string>();
 
         private async void OnExpanderExClickAsync(object sender, ExpanderExClickEventArgs e)
         {
             var dialog = new ContentDialog();
-            dialog.Content = $"You clicked: {(sender as Richasy.ExpanderEx.Uwp.ExpanderEx).Name}";
+            dialog.Content = $"You clicked: {(sender as ExpanderEx).Name}";
             dialog.CloseButtonText = "Cancel";
             dialog.Title = "Hi!";
             await dialog.ShowAsync();

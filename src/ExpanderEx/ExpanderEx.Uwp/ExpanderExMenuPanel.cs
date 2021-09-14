@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -51,8 +53,8 @@ namespace Richasy.ExpanderEx.Uwp
         /// </summary>
         public Thickness MenuItemInlineIntermediatePadding
         {
-            get { return (Thickness)this.GetValue(MenuItemInlineIntermediatePaddingProperty); }
-            set { this.SetValue(MenuItemInlineIntermediatePaddingProperty, value); }
+            get { return (Thickness)GetValue(MenuItemInlineIntermediatePaddingProperty); }
+            set { SetValue(MenuItemInlineIntermediatePaddingProperty, value); }
         }
 
         /// <summary>
@@ -76,21 +78,53 @@ namespace Richasy.ExpanderEx.Uwp
         /// <inheritdoc/>
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (this.Children.Count == 0)
+            if (Children.Count == 0)
             {
                 return new Size(0, 0);
             }
             else
             {
-                foreach (var child in Children)
+                if (Children.Count == 1)
                 {
-                    if (child is ExpanderExWrapper wrapper)
+                    var child = Children.First();
+
+                    // If the user uses the data source control,
+                    // here we need to traverse the generated wrapper instance.
+                    if (child is ItemsRepeater repeater)
                     {
-                        wrapper.WrapMargin = this.MenuItemWrapMargin;
-                        wrapper.WrapRowSpacing = this.MenuItemWrapRowSpacing;
-                        wrapper.InlineWidePadding = this.MenuItemInlineWidePadding;
-                        wrapper.InlineIntermediatePadding = this.MenuItemInlineIntermediatePadding;
-                        wrapper.Measure(availableSize);
+                        repeater.ElementPrepared -= OnRepeaterElementPrepared;
+                        repeater.ElementPrepared += OnRepeaterElementPrepared;
+                        foreach (var item in repeater.FindDescendantElements<ExpanderExWrapper>())
+                        {
+                            UpdateInternalWrapperLayout(availableSize, item);
+                        }
+                    }
+                    else if (child is ItemsControl itemsControl)
+                    {
+                        foreach (var item in itemsControl.Items)
+                        {
+                            var container = itemsControl.ContainerFromItem(item);
+                            if (container == null)
+                            {
+                                continue;
+                            }
+
+                            var wrappers = container.FindDescendantElements<ExpanderExWrapper>();
+                            foreach (var wrapper in wrappers)
+                            {
+                                UpdateInternalWrapperLayout(availableSize, wrapper);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var child in Children)
+                    {
+                        if (child is ExpanderExWrapper wrapper)
+                        {
+                            UpdateInternalWrapperLayout(availableSize, wrapper);
+                        }
                     }
                 }
             }
@@ -102,5 +136,23 @@ namespace Richasy.ExpanderEx.Uwp
         protected override Size ArrangeOverride(Size finalSize) => base.ArrangeOverride(finalSize);
 
         private static void OnItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) => (d as ExpanderExMenuPanel).InvalidateMeasure();
+
+        private void OnRepeaterElementPrepared(ItemsRepeater sender, ItemsRepeaterElementPreparedEventArgs args)
+        {
+            foreach (var item in sender.FindDescendantElements<ExpanderExWrapper>())
+            {
+                UpdateInternalWrapperLayout(this.DesiredSize, item);
+            }
+        }
+
+        private void UpdateInternalWrapperLayout(Size availableSize, ExpanderExWrapper wrapper)
+        {
+            wrapper.WrapMargin = MenuItemWrapMargin;
+            wrapper.WrapRowSpacing = MenuItemWrapRowSpacing;
+            wrapper.InlineWidePadding = MenuItemInlineWidePadding;
+            wrapper.InlineIntermediatePadding = MenuItemInlineIntermediatePadding;
+            wrapper.Measure(availableSize);
+            wrapper.CheckVisualState();
+        }
     }
 }
