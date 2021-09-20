@@ -33,6 +33,11 @@ namespace Richasy.ExpanderEx.Uwp
 
         internal void CheckVisualState()
         {
+            if (_parent == null || _rootGrid == null)
+            {
+                return;
+            }
+
             if (_parent.ActualWidth < WrapThreshold)
             {
                 VisualStateManager.GoToState(this, WrapStateName, false);
