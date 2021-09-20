@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Richasy.ExpanderEx.UWP</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Richasy</authors>
     <owners>Richasy</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Richasy/ExpanderEx</projectUrl>
     <iconUrl>https://z3.ax1x.com/2021/07/05/R4BwEq.png</iconUrl>
     <description>Encapsulation based on the Expander of WinUI 2.6</description>
-    <releaseNotes>Add support for ItemsControl and ItemsRepeater, update the example.</releaseNotes>
+    <releaseNotes>Detect wrapper render issue.</releaseNotes>
     <copyright>Copyright 2021</copyright>
     <tags>Richasy uwp expander winui</tags>
     <dependencies>
